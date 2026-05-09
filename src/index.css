@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 258 90% 66%;
+    --secondary: 222.2 47.4% 11.2%;
+  }
+
+  body {
+    @apply font-inter bg-slate-950 text-slate-50;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-outfit;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  /* premium-gradient moved to end for theme support */
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  }
+
+  .btn-primary {
+    @apply px-8 py-4 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-2xl 
+    transition-all duration-300 shadow-lg shadow-primary-900/20 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .shimmer-bg {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.05),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+/* Theme Definitions */
+.theme-midnight { 
+  --primary-color: #4f46e5; 
+  --accent-color: #7c3aed; 
+  --tertiary-color: #4338ca;
+  --bg-color: #020617;
+  --bg-glow: rgba(79, 70, 229, 0.15);
+  --ui-radius: 1.5rem;
+  --ui-blur: 20px;
+}
+.theme-emerald { 
+  --primary-color: #10b981; 
+  --accent-color: #059669; 
+  --tertiary-color: #047857;
+  --bg-color: #060e0a;
+  --bg-glow: rgba(16, 185, 129, 0.08); /* Reduced glow */
+  --ui-radius: 0.25rem;
+  --ui-blur: 8px;
+}
+.theme-rose { 
+  --primary-color: #f43f5e; 
+  --accent-color: #e11d48; 
+  --tertiary-color: #be123c;
+  --bg-color: #0f0507;
+  --bg-glow: rgba(244, 63, 94, 0.08); /* Reduced glow */
+  --ui-radius: 2rem;
+  --ui-blur: 40px;
+}
+.theme-ocean { 
+  --primary-color: #0ea5e9; 
+  --accent-color: #0284c7; 
+  --tertiary-color: #0369a1;
+  --bg-color: #040914;
+  --bg-glow: rgba(14, 165, 233, 0.08); /* Reduced glow */
+  --ui-radius: 1rem;
+  --ui-blur: 24px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(var(--ui-blur));
+  -webkit-backdrop-filter: blur(var(--ui-blur));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--ui-radius);
+}
+
+.rounded-theme { border-radius: var(--ui-radius); }
+
+.theme-emerald::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.2; /* Softer scanlines */
+}
+
+.theme-rose .glass {
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Removed awful box-shadow, softer borders */
+}
+
+.theme-ocean .glass {
+  background: rgba(255, 255, 255, 0.01);
+  border-top: 1px solid rgba(255, 255, 255, 0.15); /* Frosty top edge */
+}
+
+.premium-gradient {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color), var(--tertiary-color));
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.text-gradient {
+  @apply premium-gradient bg-clip-text text-transparent;
+  -webkit-background-clip: text;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) }
+  100% { transform: translateX(100%) }
+}
+
+/* Hide number input arrows */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
