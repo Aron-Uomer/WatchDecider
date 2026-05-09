@@ -83,7 +83,8 @@ const AuthView = ({ onAuthSuccess, onCancel }) => {
       } else {
         await checkUsername(username);
         
-        // Trigger verification email via backend
+        // Trigger verification email via backend (DISABLED due to Render blocking SMTP ports)
+        /*
         try {
           const response = await fetch('/api/send-verification', {
             method: 'POST',
@@ -102,6 +103,16 @@ const AuthView = ({ onAuthSuccess, onCancel }) => {
           setLoading(false);
           return;
         }
+        */
+
+        // BYPASS: Sign up immediately without email verification
+        const additionalInfo = { name: fullName };
+        const session = await signup(username, password, email, '123456', additionalInfo);
+        
+        setSuccess('Account created successfully!');
+        setTimeout(() => {
+          onAuthSuccess(session);
+        }, 1500);
       }
     } catch (err) {
       setError(err.message);

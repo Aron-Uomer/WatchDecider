@@ -393,14 +393,15 @@ app.post('/api/auth/check-username', async (req, res) => {
 
 app.post('/api/auth/signup', async (req, res) => {
   const { username, password, email, code, ...additionalInfo } = req.body;
-  if (!username || !password || !email || !code) {
-    return res.status(400).json({ error: 'Missing required fields (username, password, email, code)' });
+  if (!username || !password || !email) {
+    return res.status(400).json({ error: 'Missing required fields (username, password, email)' });
   }
 
   try {
     if (!db) throw new Error('Database not initialized');
     
-    // 1. Verify the code
+    // 1. Verify the code (DISABLED due to Render SMTP limits)
+    /*
     const doc = await db.collection('verificationCodes').doc(email).get();
     if (!doc.exists) {
       return res.status(404).json({ error: 'No active code found for this email' });
@@ -415,6 +416,7 @@ app.post('/api/auth/signup', async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid verification code' });
     }
+    */
 
     // 2. Check if username or email exists
     const usersRef = db.collection('users');
@@ -443,8 +445,8 @@ app.post('/api/auth/signup', async (req, res) => {
     const docRef = usersRef.doc(username);
     await docRef.set(newUser);
     
-    // Clean up verification code
-    await db.collection('verificationCodes').doc(email).delete();
+    // Clean up verification code (DISABLED)
+    // await db.collection('verificationCodes').doc(email).delete();
     
     // Create secure session
     const token = generateToken();
