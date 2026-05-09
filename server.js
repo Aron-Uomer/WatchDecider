@@ -410,10 +410,10 @@ app.post('/api/auth/signup', async (req, res) => {
     try {
       const mxRecords = await dns.promises.resolveMx(domain);
       if (!mxRecords || mxRecords.length === 0) {
-        return res.status(400).json({ error: 'Invalid email domain. Please enter a real email address.' });
+        return res.status(400).json({ error: 'Please use a valid email address.' });
       }
     } catch (dnsError) {
-      return res.status(400).json({ error: 'Email domain does not exist or cannot receive mail.' });
+      return res.status(400).json({ error: 'Please use a valid email address.' });
     }
     
     // 1. Verify the code (DISABLED due to Render SMTP limits)
