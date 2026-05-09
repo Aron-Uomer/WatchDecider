@@ -9,6 +9,10 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { createRequire } from 'module';
+import dns from 'dns';
+
+// Force Node.js to prefer IPv4 (Fixes Gmail SMTP ENETUNREACH on Render)
+dns.setDefaultResultOrder('ipv4first');
 
 dotenv.config();
 
@@ -18,6 +22,9 @@ const require = createRequire(import.meta.url);
 
 const app = express();
 const port = process.env.PORT || 3001;
+
+// Trust the reverse proxy (required for express-rate-limit on Render/Heroku)
+app.set('trust proxy', 1);
 
 // 1. Firebase Initialization (supports file path OR inline JSON for production)
 const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
