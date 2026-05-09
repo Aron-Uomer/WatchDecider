@@ -447,7 +447,7 @@ const App = () => {
       </div>
 
       {/* Navigation / Header */}
-      <nav className="fixed top-0 left-0 right-0 p-6 flex justify-between items-center z-40">
+      <nav className="fixed top-0 left-0 right-0 px-6 py-4 flex justify-between items-center z-40 bg-slate-950/80 backdrop-blur-xl border-b border-white/10">
         <div
           onClick={() => setView('home')}
           className="flex items-center gap-2 cursor-pointer group relative z-10"
